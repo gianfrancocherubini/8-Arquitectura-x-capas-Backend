@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { auth2 } from '../controller/registro.controller.js';
-import { RegistroController } from '../controller/registro.controller.js';
+import { RegistroController, auth2 } from '../controller/registro.controller.js';
 
 export const router=Router()
 
