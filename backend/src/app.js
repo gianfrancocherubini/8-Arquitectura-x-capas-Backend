@@ -10,7 +10,7 @@ import __dirname from './utils.js';
 import { config } from './config/configCommander.js';
 
 // import { inicializarPassport } from './config/config.passport.js';
-// import { router as routerCarrito } from './routes/carrito.router.js';
+import { router as routerCarrito } from './routes/carrito.router.js';
 import { router as routerHome } from './routes/products.router.js';
 // import { router as routerRegistro } from './routes/registro.router.js';
 // import { router as routerLogin } from './routes/login.router.js';
@@ -62,7 +62,7 @@ app.use('/home',
 
     // next();
  routerHome);
-// app.use('/api/carts', routerCarrito)
+app.use('/api/carts', routerCarrito)
 // app.use('/api/registro', routerRegistro)
 // app.use('/api/perfil', routerPerfil)
 // app.use('/api/login', routerLogin)
