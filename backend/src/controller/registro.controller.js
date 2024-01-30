@@ -19,7 +19,7 @@ export class RegistroController{
     }
 
     static async registroError (req,res){
-
+        
         return res.redirect('/api/registro?errorMessage=Error en el proceso de registro')
     }
 
