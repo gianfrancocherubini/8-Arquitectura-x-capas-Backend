@@ -18,11 +18,14 @@ export class CarritoMongoDao {
     async addProductToCart(cartId, productId, quantity) {
             const cart = await Cart.findById(cartId);
             const product = await ProductEsquema.findById(productId);
-        
-            if (!product) {
-                console.log('Producto no encontrado');
+
+            if(!cart){
+                console.log('Carrito no encontrado')
             }
-        
+            if(!product){
+                console.log('Producto no encontrado')
+            }
+
             const existingItemIndex = cart.items.findIndex(item => item.product.equals(productId));
         
             if (existingItemIndex !== -1) {
@@ -42,18 +45,17 @@ export class CarritoMongoDao {
     async deleteProductToCart(cartId, productId) {
         
             const cart = await Cart.findById(cartId);
-        
-            if (!cart) {
-                console.log('Carrito no encontrado.');
+
+            if(!cart){
+                console.log('Carrito no encontrado')
             }
-        
             const existingItemIndex = cart.items.findIndex(item => item.product.equals(productId));
         
             if (existingItemIndex !== -1) {
                 // Elimina el producto del array de items
                 cart.items.splice(existingItemIndex, 1);
             } else {
-                throw new Error('Producto no encontrado en el carrito.');
+                console.log('Producto no encontrado en el carrito.');
             }
         
             // Llama a save para aplicar los cambios en la base de datos
@@ -69,13 +71,9 @@ export class CarritoMongoDao {
             if (!cart) {
                 console.log('Carrito no encontrado.');
             }
-        
             // Elimina el carrito directamente
-            await Cart.findByIdAndDelete(cartId);
+            return await Cart.findByIdAndDelete(cartId);
         
-            // Retorna el carrito eliminado
-            return `Carrito ${cartId} eliminado`;
-       
     }
 }
 
