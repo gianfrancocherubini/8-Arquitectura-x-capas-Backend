@@ -1,7 +1,6 @@
 import { CarritoMongoDao } from "../dao/carritoManagerMongo.js";
-import { ProductsMongoDao } from "../dao/productsManagerMongo.js";
-const cm = new CarritoMongoDao();
 
+const cm = new CarritoMongoDao();
 
  export class CarritoController {
     constructor(){}
