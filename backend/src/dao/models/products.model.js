@@ -45,7 +45,5 @@ const productSchema = new mongoose.Schema({
     strict: false 
 });
 
-productSchema.plugin(paginate)
-
 export const ProductEsquema = mongoose.model('products', productSchema);
 

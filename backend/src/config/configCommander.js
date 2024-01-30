@@ -20,7 +20,7 @@ const mode=opts.mode
 dotenv.config(
     {
         override: true,
-        path:mode==="dev"?"./src/.env.development":"./src/.env.production"
+        path:mode==="dev"?"./backend/src/.env.development":"./backend/src/.env.production"
     }
 )
 
