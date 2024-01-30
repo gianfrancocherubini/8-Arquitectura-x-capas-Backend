@@ -1,7 +1,5 @@
-// listo el post para crear carrito
 import { Router } from 'express';
 import { CarritoController } from '../controller/carrito.controller.js';
-
 export const router=Router()
 
 router.post('/', CarritoController.createCart);
