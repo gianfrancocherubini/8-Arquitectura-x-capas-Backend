@@ -17,7 +17,7 @@ export class ProductsMongoDao {
     }
 
     async getByCode (productByCode){
-        const productCode = await ProductEsquema.find({code: productByCode})
+        const productCode = await ProductEsquema.findOne({code: productByCode})
         return productCode;
     }
 

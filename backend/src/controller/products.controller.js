@@ -1,3 +1,4 @@
+import validUrl from 'valid-url'
 import { ProductsMongoDao } from "../dao/productsManagerMongo.js";
 
 const productsDao = new ProductsMongoDao();
@@ -50,13 +51,16 @@ export class ProductsController{
                 return res.status(400).json({ error: 'La URL de la imagen no es válida.' });
             }
             const existingProduct = await productsDao.getByCode(newProductData.code);
-           
+            
+
             if (existingProduct) {
                 res.setHeader('Content-Type', 'application/json');
                 return res.status(400).json({ error: `Ya existe un producto con el código '${newProductData.code}'.` });
             }
+            
     
             await productsDao.create(newProductData);
+            console.log(newProductData);
             res.setHeader('Content-Type', 'application/json');
             return res.status(201).json({ success: true, message: 'Producto agregado correctamente.', newProductData });
         } catch (error) {
@@ -80,14 +84,14 @@ export class ProductsController{
             // Verificar si la propiedad _id está presente en el cuerpo de la solicitud
             if ('_id' in req.body) {
                 res.setHeader('Content-Type', 'application/json');
-                return res.status(400).json({ error: 'No se puede modificar la propiedad "_id".' });
+                return res.status(400).json({ error: 'No se puede modificar la propiedad _id.' });
             }
     
             // Actualizar el producto utilizando findByIdAndUpdate
             const updateResult = await productsDao.unpdateProduct(productId, req.body);
     
             if (updateResult) {
-                console.log('Producto actualizado:', updateResult);
+                console.log('Producto actualizado:', productId,', Modificacion:',req.body);
                 res.setHeader('Content-Type', 'application/json');
                 return res.status(200).json({ success: true, message: 'Modificación realizada.' });
             } else {
@@ -100,11 +104,4 @@ export class ProductsController{
             return res.status(500).json({ error: 'Error al actualizar el producto.' });
         }
     }
-
-    static async error (req,res){
-        res.setHeader('Content-Type', 'application/json');
-        res.status(404).json({error: "Page not found"});
-    }
-
-
 };
