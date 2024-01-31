@@ -13,4 +13,9 @@ export class UsuariosMongoDao {
         let administrador = await UsuariosModelo.findById({_id: adminId, rol: "administrador"});
         return administrador;
     }
+
+    async gettodosUsuarios(usuarios){
+        let todosUsuarios = await UsuariosModelo.find().lean();
+        return todosUsuarios;
+    }
 }
