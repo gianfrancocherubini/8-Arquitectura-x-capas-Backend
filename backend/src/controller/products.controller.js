@@ -19,8 +19,8 @@ export class ProductsController{
             res.setHeader('Content-Type', 'text/html');
             res.status(200).render('home', {
                 products: products,
-                // login: req.session.usuario ? true : false,
-                currentCategory: category, // Pasa la categoría actual a la vista
+                login: req.session.usuario ? true : false,
+                currentCategory: category, 
             });
     
         } catch (err) {
