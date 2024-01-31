@@ -1,5 +1,5 @@
 import validUrl from 'valid-url'
-import { ProductsMongoDao } from "../dao/productsManagerMongo.js";
+import { ProductsMongoDao } from "../dao/productsDao.js";
 const productsDao = new ProductsMongoDao();
 
 export class ProductsController{

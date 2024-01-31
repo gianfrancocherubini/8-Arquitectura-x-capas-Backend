@@ -1,4 +1,4 @@
-import { CarritoMongoDao } from "../dao/carritoManagerMongo.js";
+import { CarritoMongoDao } from "../dao/carritoDao.js";
 
 const cm = new CarritoMongoDao();
 
