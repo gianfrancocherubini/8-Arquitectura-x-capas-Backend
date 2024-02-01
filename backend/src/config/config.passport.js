@@ -3,7 +3,9 @@ import local from 'passport-local'
 import github from 'passport-github2'
 import { UsuariosModelo } from '../dao/models/usuarios.model.js'
 import { creaHash, validaPassword } from '../utils.js'
+import { UsuariosMongoDao } from '../dao/usuariosDao.js'
 
+const usuariosDao = new UsuariosMongoDao();
 
 
 // exporto 
@@ -29,7 +31,7 @@ export const inicializarPassport=()=>{
                      return done(null, false)
                 }
             
-                let existe=await UsuariosModelo.findOne({email})
+                let existe=await usuariosDao.getUsuarioByEmail(email)
                 if(existe){
                     return done(null, false)
                 }
@@ -37,7 +39,7 @@ export const inicializarPassport=()=>{
                 if (email === 'adminCoder@coder.com') {
                     try {
                         let hashedPassword = creaHash(password);
-                        let usuario = await UsuariosModelo.create({ nombre, email, password: hashedPassword, rol: 'administrador' });
+                        let usuario = await usuariosDao.createAdmin(nombre, email, hashedPassword, 'administrador');
                         return done(null, usuario)
                     } catch (error) {
                         return done(null, false)
@@ -45,7 +47,7 @@ export const inicializarPassport=()=>{
                 } else {
                     password = creaHash(password);
                     try { 
-                        let usuario = await UsuariosModelo.create({ nombre, email, password});
+                        let usuario = await usuariosDao.crearUsuarioRegular(nombre, email, password);
                         return done(null, usuario)
                     } catch (error) {
                         return done(null, false)
@@ -69,7 +71,7 @@ export const inicializarPassport=()=>{
                     return done(null, false)
                 }
             
-                let usuario = await UsuariosModelo.findOne({ email: username}).lean();
+                let usuario = await usuariosDao.getUsuarioByEmailLogin(username);
             
                 if (!usuario) {
                     return done(null, false)
@@ -98,14 +100,9 @@ export const inicializarPassport=()=>{
         async(accessToken, refreshToken, profile, done)=>{
             try {
                 // console.log(profile)
-                let usuario=await UsuariosModelo.findOne({email: profile._json.email}).lean();
+                let usuario=await usuariosDao.getUsuarioByEmailLogin(profile._json.email)
                 if(!usuario){
-                    let nuevoUsuario={
-                        nombre: profile._json.name,
-                        email: profile._json.email, 
-                    }
-
-                    usuario=await UsuariosModelo.create(nuevoUsuario)
+                    usuario = await usuariosDao.crearUsuarioGitHub(profile._json.name, profile._json.email);
                 }
                 delete usuario.password
                 return done(null, usuario)
