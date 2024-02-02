@@ -10,7 +10,7 @@ import passport from 'passport';
 import { config } from './config/configCommander.js';
 import { inicializarPassport } from './config/config.passport.js';
 import { router as routerCarrito } from './routes/carrito.router.js';
-import { router as routerHome } from './routes/products.router.js';
+import { router as routerProducts } from './routes/products.router.js';
 import { router as routerRegistro } from './routes/registro.router.js';
 import { router as routerLogin } from './routes/login.router.js';
 import { router as routerPerfil } from './routes/perfil.router.js';
@@ -48,20 +48,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
 
-app.use('/home', (req, res, next) => {
-    // Pasa la información del usuario a la vista "home" solo si se ha iniciado sesión
-    if (req.session.usuario) {
-        res.locals.usuario = req.session.usuario;
-
-        // Verifica si la consulta 'login' está presente y muestra el mensaje de bienvenida
-        if (req.query.login === 'success') {
-            res.locals.welcomeMessage = true;
-        }
-    }
-
-    next();
-}, routerHome);
 app.use('/', vistasRouter)
+app.use('/api/products', routerProducts);
 app.use('/api/carts', routerCarrito)
 app.use('/api/registro', routerRegistro)
 app.use('/api/perfil', routerPerfil)

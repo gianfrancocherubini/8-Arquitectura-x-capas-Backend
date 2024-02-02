@@ -9,7 +9,19 @@ import { Router } from 'express';
 export const router=Router();
 
 
-router.get('/', ProductsController.getProducts);
+router.get('/',(req, res, next) => {
+    // Pasa la información del usuario a la vista "home" solo si se ha iniciado sesión
+    if (req.session.usuario) {
+        res.locals.usuario = req.session.usuario;
+
+        // Verifica si la consulta 'login' está presente y muestra el mensaje de bienvenida
+        if (req.query.login === 'success') {
+            res.locals.welcomeMessage = true;
+        }
+    }
+
+    next();
+}, ProductsController.getProducts);
 router.get('/carrito', CarritoController.getCartById);
 router.get('/registro', auth2, RegistroController.registroRender);
 router.get('/perfil', auth, PerfilController.perfilUsuario);
