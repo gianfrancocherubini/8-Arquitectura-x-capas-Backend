@@ -42,6 +42,16 @@ export class UsuariosMongoDao {
         }
     }
 
+    async getUsuarioById(id){
+        try {
+            let usuario=await UsuariosModelo.findOne({id})
+            return usuario;
+        }catch(error){
+            console.error("Error al obtener el usuario por email,", error);
+            throw error;
+        }
+    }
+
     async createAdmin(nombre, email, password, rol) {
         try {
             let usuario = await UsuariosModelo.create({ nombre, email, password, rol: 'administrador' });

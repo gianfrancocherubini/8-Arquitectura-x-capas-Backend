@@ -121,7 +121,7 @@ export const inicializarPassport=()=>{
     })
 
     passport.deserializeUser(async(id, done)=>{
-        let usuario=await UsuariosModelo.findById(id)
+        let usuario=await usuariosDao.getUsuarioById(id)
         return done(null, usuario)
     })
 
