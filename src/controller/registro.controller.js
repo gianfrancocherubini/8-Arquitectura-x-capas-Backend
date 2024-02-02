@@ -1,6 +1,6 @@
 export const auth2 = (req, res, next) => {
     if (req.session.usuario) {
-        res.status(401).redirect('/api/perfil'); 
+        res.status(401).redirect('/perfil'); 
         return;
     }
 
@@ -20,13 +20,13 @@ export class RegistroController{
 
     static async registroError (req,res){
         
-        return res.redirect('/api/registro?errorMessage=Error en el proceso de registro')
+        return res.redirect('/registro?errorMessage=Error en el proceso de registro')
     }
 
     static async registro (req,res){
 
         let {email}=req.body
-        res.redirect(`/api/login?message=Usuario ${email} registrado correctamente`)
+        res.redirect(`/login?message=Usuario ${email} registrado correctamente`)
         
     }
 

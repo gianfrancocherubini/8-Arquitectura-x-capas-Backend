@@ -8,14 +8,13 @@ import cookieParser from 'cookie-parser';
 import __dirname from './utils.js';
 import passport from 'passport';
 import { config } from './config/configCommander.js';
-
 import { inicializarPassport } from './config/config.passport.js';
 import { router as routerCarrito } from './routes/carrito.router.js';
 import { router as routerHome } from './routes/products.router.js';
 import { router as routerRegistro } from './routes/registro.router.js';
 import { router as routerLogin } from './routes/login.router.js';
 import { router as routerPerfil } from './routes/perfil.router.js';
-import { router as routerLogout } from './routes/logout.router.js';
+import { router as vistasRouter } from './routes/vistas.router.js';
 
 
 const PORT = config.PORT;
@@ -62,11 +61,12 @@ app.use('/home', (req, res, next) => {
 
     next();
 }, routerHome);
+app.use('/', vistasRouter)
 app.use('/api/carts', routerCarrito)
 app.use('/api/registro', routerRegistro)
 app.use('/api/perfil', routerPerfil)
 app.use('/api/login', routerLogin)
-app.use('/api/logout', routerLogout)
+
 
 
 const connectToDatabase = async () => {

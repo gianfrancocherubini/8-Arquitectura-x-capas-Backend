@@ -87,7 +87,7 @@ export class ProductsController{
             }
     
             // Actualizar el producto utilizando findByIdAndUpdate
-            const updateResult = await productsDao.unpdateProduct(productId, req.body);
+            const updateResult = await productsDao.updateProduct(productId, req.body);
     
             if (updateResult) {
                 console.log('Producto actualizado:', productId,', Modificacion:',req.body);

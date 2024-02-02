@@ -6,11 +6,11 @@ export class LogoutController {
         console.log('Logout del usuario:', req.session.usuario)
         req.session.destroy(error => {
             if (error) {
-                res.status(500).redirect('/api/login?error=fallo en el logout');
+                res.status(500).redirect('/login?error=fallo en el logout');
                 return;
             }
             
-            res.redirect('/api/login');
+            res.redirect('/login');
         });
     
     }

@@ -82,7 +82,7 @@ const cm = new CarritoMongoDao();
                 return;
             }
     
-            const deleteProductToCart = await cm.deleteProductToCart(cartId, productId);
+            const deleteProductToCart = await cm.deleteProductFromCart(cartId, productId);
             console.log(`Producto : ${productId} eliminado de ${cartId} correctamente`)
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json({message: `Producto : ${productId} eliminado de ${cartId} correctamente`});

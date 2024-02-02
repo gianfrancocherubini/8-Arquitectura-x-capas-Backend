@@ -3,7 +3,7 @@ import passport from 'passport';
 import { LoginController, auth2 } from '../controller/login.controller.js';
 export const router=Router()
 
-router.get('/', auth2, LoginController.loginRender);
+
 
 // ESTRATEGIA DE AUTENTICACION CON GITHUB
 router.get('/github', passport.authenticate('github',{}), (req,res)=>{});

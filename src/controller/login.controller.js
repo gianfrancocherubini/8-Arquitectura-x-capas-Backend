@@ -1,6 +1,6 @@
 export const auth2 = (req, res, next) => {
     if (req.session.usuario) {
-        res.status(401).redirect('/api/perfil'); 
+        res.status(401).redirect('/perfil'); 
         return;
     }
 
@@ -29,7 +29,7 @@ export class LoginController {
     }
 
     static async loginLocalError(req,res){
-        return res.redirect('/api/login?error=Error en el proceso de login... :(')
+        return res.redirect('/login?error=Error en el proceso de login... :(')
     }
 
     static async loginLocal(req,res){
@@ -40,6 +40,6 @@ export class LoginController {
         rol: req.user.rol
     };
 
-    res.redirect('/home');
+    res.redirect('/');
     }
 }
