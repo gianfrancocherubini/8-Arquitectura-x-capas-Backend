@@ -62,9 +62,9 @@ export class UsuariosMongoDao {
         }
     }
 
-    async crearUsuarioRegular(nombre, email, password) {
+    async crearUsuarioRegular(nombre, email, password, idCarrito) {
         try {
-            const usuario = await UsuariosModelo.create({ nombre, email, password });
+            const usuario = await UsuariosModelo.create({ nombre, email, password,carrito: idCarrito });
             return usuario;
         } catch (error) {
             console.error("Error al crear usuario regular:", error);

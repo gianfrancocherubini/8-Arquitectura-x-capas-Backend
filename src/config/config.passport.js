@@ -3,9 +3,10 @@ import local from 'passport-local'
 import github from 'passport-github2'
 import { creaHash, validaPassword } from '../utils.js'
 import { UsuariosMongoDao } from '../dao/usuariosDao.js'
+import { CarritoMongoDao } from '../dao/carritoDao.js'
 
 const usuariosDao = new UsuariosMongoDao();
-
+const carritoDao=new CarritoMongoDao();
 
 // exporto 
 export const inicializarPassport=()=>{
@@ -46,7 +47,10 @@ export const inicializarPassport=()=>{
                 } else {
                     password = creaHash(password);
                     try { 
-                        let usuario = await usuariosDao.crearUsuarioRegular(nombre, email, password);
+                        let {_id:idCarrito} = await carritoDao.createEmptyCart()
+                        let usuario = await usuariosDao.crearUsuarioRegular(nombre, email, password, idCarrito);
+                        console.log(usuario)
+
                         return done(null, usuario)
                     } catch (error) {
                         return done(null, false)

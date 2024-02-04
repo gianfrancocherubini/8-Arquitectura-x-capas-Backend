@@ -28,7 +28,8 @@ export class LoginController {
         req.session.usuario = {
         nombre: req.user.nombre,
         email: req.user.email,
-        rol: req.user.rol
+        rol: req.user.rol,
+        carrito: req.user.carrito
     };
 
     res.redirect('/');

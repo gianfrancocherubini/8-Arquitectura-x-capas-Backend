@@ -21,6 +21,19 @@
     <p>Precio: {{price}}</p>
     <p>Stock: {{stock}}</p>
     <p>Categoría: {{category}}</p>
-    <button>Agregar al carrito</button>
+    <button onclick="agregar('{{_id}}', '{{title}}', '{{usuario.carrito}}')">Agregar al carrito</button>
   </div>
 {{/each}}
+
+
+<script>
+  const agregar=async(id, title, carrito)=>{
+    console.log(id, title, carrito, "{{usuario.carrito}}", carrito)
+    let resultado=await fetch("/api/carts/{{usuario.carrito}}/product/"+id,{
+      method:"post"
+    })
+    let datos=await resultado.json()
+    console.log(datos)
+  }
+
+</script>
