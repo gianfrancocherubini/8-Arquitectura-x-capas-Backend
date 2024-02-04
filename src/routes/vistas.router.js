@@ -22,7 +22,7 @@ router.get('/',(req, res, next) => {
 
     next();
 }, ProductsController.getProducts);
-router.get('/carrito', CarritoController.getCartById);
+router.get('/carrito/:cid', CarritoController.getCartById);
 router.get('/registro', auth2, RegistroController.registroRender);
 router.get('/perfil', auth, PerfilController.perfilUsuario);
 router.get('/login', auth2, LoginController.loginRender);

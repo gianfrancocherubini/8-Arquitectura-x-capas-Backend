@@ -47,8 +47,9 @@ export const inicializarPassport=()=>{
                 } else {
                     password = creaHash(password);
                     try { 
-                        let {_id:idCarrito} = await carritoDao.createEmptyCart()
-                        let usuario = await usuariosDao.crearUsuarioRegular(nombre, email, password, idCarrito);
+                        let {_id:carrito} = await carritoDao.createEmptyCart()
+                        let usuario = await usuariosDao.crearUsuarioRegular(nombre, email, password, carrito);
+                        delete usuario.password
                         console.log(usuario)
 
                         return done(null, usuario)
