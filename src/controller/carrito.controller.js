@@ -36,9 +36,9 @@ const cm = new CarritoMongoDao();
                 res.status(404).json({ error: 'Carrito no encontrado.' });
                 return;
             }
-            
+            let usuario = req.session.usuario;
             res.setHeader('Content-Type', 'text/html');
-            res.status(200).render('carrito', {carts : cart}) ;
+            res.status(200).render('carrito', {carts : cart, usuario, login : true}) ;
             console.log('Carrito:', cart._id , 'con los items:', cart.items)
         } catch (error) {
             console.error(error);
