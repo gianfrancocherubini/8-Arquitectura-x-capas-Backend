@@ -1,6 +1,8 @@
 import validUrl from 'valid-url'
-import { ProductsMongoDao } from "../dao/productsDao.js";
-const productsDao = new ProductsMongoDao();
+// import { ProductsMongoDao } from "../dao/productsDao.js";
+// const productsDao = new ProductsMongoDao();
+import { ProductsService } from '../services/products.service.js';
+const productsService = new ProductsService();
 
 export class ProductsController{
     constructor(){}
@@ -14,7 +16,7 @@ export class ProductsController{
                 query.category = category;
             }
     
-            const products = await productsDao.get(query);
+            const products = await productsService.getProducts(query);
     
             res.setHeader('Content-Type', 'text/html');
             res.status(200).render('home', {
@@ -49,7 +51,7 @@ export class ProductsController{
                 res.setHeader('Content-Type', 'application/json');
                 return res.status(400).json({ error: 'La URL de la imagen no es válida.' });
             }
-            const existingProduct = await productsDao.getByCode(newProductData.code);
+            const existingProduct = await productsService.getProductByCode(newProductData.code);
             
 
             if (existingProduct) {
@@ -58,7 +60,7 @@ export class ProductsController{
             }
             
     
-            await productsDao.create(newProductData);
+            await productsService.createProduct(newProductData);
             console.log(newProductData);
             res.setHeader('Content-Type', 'application/json');
             return res.status(201).json({ success: true, message: 'Producto agregado correctamente.', newProductData });
@@ -73,7 +75,7 @@ export class ProductsController{
             const productId = req.params.pid;
     
             // Buscar el producto existente por _id
-            const existingProduct = await productsDao.getById(productId)
+            const existingProduct = await productsService.getProductById(productId)
     
             if (!existingProduct) {
                 res.setHeader('Content-Type', 'application/json');
@@ -87,7 +89,7 @@ export class ProductsController{
             }
     
             // Actualizar el producto utilizando findByIdAndUpdate
-            const updateResult = await productsDao.updateProduct(productId, req.body);
+            const updateResult = await productsService.update(productId, req.body);
     
             if (updateResult) {
                 console.log('Producto actualizado:', productId,', Modificacion:',req.body);

@@ -12,16 +12,6 @@ export class ProductsMongoDao {
         }
     }
 
-    async getByCategory(category) {
-        try {
-            const productsCategory = await ProductEsquema.findOne({ category, deleted: false });
-            return productsCategory;
-        } catch (error) {
-            console.error("Error al obtener productos por categoría:", error);
-            throw error;
-        }
-    }
-
     async getById(productId) {
         try {
             const product = await ProductEsquema.findById({ _id: productId, deleted: false });
