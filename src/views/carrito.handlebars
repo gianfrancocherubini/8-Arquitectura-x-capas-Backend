@@ -10,7 +10,7 @@
                     <p>Precio: {{this.product.price}}</p>
                     <p>Categoría: {{this.product.category}}</p>
                     <p>Cantidad: {{this.quantity}}</p>
-                    <button onclick="eliminarProducto('{{this.product._id}}')">Eliminar del carrito</button>
+                    <button onclick="eliminarProducto('{{this.product._id}}', '{{usuario.carrito}}')">Eliminar del carrito</button>
                 </li>
             {{/each}}
             <button onclick="realizarCompra()">Comprar</button>
@@ -22,3 +22,14 @@
 
 <br>
 
+<script>
+  const eliminarProducto=async(id, carrito)=>{
+    let resultado=await fetch("/api/carts/{{usuario.carrito}}/product/"+id,{
+      method:"delete"
+    })
+    let datos=await resultado.json()
+    console.log(datos)
+    location.reload();
+  }
+
+</script>
