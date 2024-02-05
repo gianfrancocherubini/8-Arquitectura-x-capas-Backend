@@ -1,13 +1,15 @@
-import { CarritoMongoDao } from "../dao/carritoDao.js";
+// import { CarritoMongoDao } from "../dao/carritoDao.js";
+// const cm = new CarritoMongoDao();
 
-const cm = new CarritoMongoDao();
+import { CarritoService } from "../services/carrito.service.js";
+const carritoService = new CarritoService();
 
  export class CarritoController {
     constructor(){}
 
     static async createCart(req, res) {
         try {
-            const newCart = await cm.createEmptyCart();
+            const newCart = await carritoService.createCart();
             console.log('Carrito creado:', newCart);
             res.setHeader('Content-Type', 'application/json');
             res.status(201).json({ success: true, message: 'Carrito creado correctamente.', cart: newCart });
@@ -29,7 +31,7 @@ const cm = new CarritoMongoDao();
                 return;
             }
             
-            const cart = await cm.getCartById(cartId);
+            const cart = await carritoService.cartById(cartId);
             
             if (!cart) {
                 res.setHeader('Content-Type', 'application/json');
@@ -60,7 +62,7 @@ const cm = new CarritoMongoDao();
               return;
             }
         
-            const updatedCart = await cm.addProductToCart(cartId, productId, quantity);
+            const updatedCart = await carritoService.addProduct(cartId, productId, quantity);
             console.log(`Producto : ${productId} agregado correctamente a Carrito : ${cartId}`)
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(updatedCart);
@@ -82,7 +84,7 @@ const cm = new CarritoMongoDao();
                 return;
             }
     
-            const deleteProductToCart = await cm.deleteProductFromCart(cartId, productId);
+            const deleteProductToCart = await carritoService.deleteProduct(cartId, productId);
             console.log(`Producto : ${productId} eliminado de ${cartId} correctamente`)
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json({message: `Producto : ${productId} eliminado de ${cartId} correctamente`});
@@ -103,7 +105,7 @@ const cm = new CarritoMongoDao();
                 return;
             }
     
-            const deletedCart = await cm.deleteCart(cartId);
+            const deletedCart = await carritoService.cartDelete(cartId);
             console.log(`Carrito: ${cartId} eliminado correctamente`)
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(`Carrito : ${cartId} eliminado correctamente`);
